@@ -1,0 +1,324 @@
+openapi: 3.0.0
+info:
+  title: API de Agendamento Simples
+  version: 1.0.0
+  description: API para agendamento entre clientes e prestadores de serviço
+servers:
+  - url: http://localhost:3000
+paths:
+  /usuarios:
+    post:
+      summary: Cadastro de usuário de login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - senha
+                - tipo
+              properties:
+                nome:
+                  type: string
+                senha:
+                  type: string
+                tipo:
+                  type: string
+                  enum: [prestador, cliente]
+      responses:
+        '201':
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '400':
+          description: Campos obrigatórios ausentes
+        '409':
+          description: Usuário já existe
+  /login:
+    post:
+      summary: Login de usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - senha
+              properties:
+                nome:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Usuário ou senha inválidos
+  /atendentes:
+    post:
+      summary: Cadastro de atendente
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+              properties:
+                nome:
+                  type: string
+      responses:
+        '201':
+          description: Atendente criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Atendente'
+        '400':
+          description: Campo nome obrigatório
+        '403':
+          description: Acesso permitido apenas para prestador
+    get:
+      summary: Listar atendentes
+      responses:
+        '200':
+          description: Lista de atendentes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Atendente'
+  /clientes:
+    post:
+      summary: Cadastro de cliente
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - nome
+                - telefone
+              properties:
+                nome:
+                  type: string
+                telefone:
+                  type: string
+      responses:
+        '201':
+          description: Cliente criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Campos obrigatórios ausentes
+        '403':
+          description: Acesso permitido apenas para cliente
+    get:
+      summary: Buscar dados do cliente
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dados do cliente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '404':
+          description: Cliente não encontrado
+        '403':
+          description: Acesso permitido apenas para cliente
+  /horarios:
+    post:
+      summary: Cadastro de horário disponível do atendente
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - atendenteId
+                - data
+                - hora
+              properties:
+                atendenteId:
+                  type: integer
+                data:
+                  type: string
+                  format: date
+                hora:
+                  type: string
+                  example: '14:00'
+      responses:
+        '201':
+          description: Horário cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HorarioDisponivel'
+        '400':
+          description: Campos obrigatórios ausentes ou data passada
+        '404':
+          description: Atendente não encontrado
+        '409':
+          description: Horário já cadastrado
+        '403':
+          description: Acesso permitido apenas para prestador
+    get:
+      summary: Listar horários disponíveis
+      parameters:
+        - name: atendenteId
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de horários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HorarioDisponivel'
+  /agendamentos:
+    post:
+      summary: Cadastro de agendamento
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - atendenteId
+                - data
+                - hora
+              properties:
+                atendenteId:
+                  type: integer
+                data:
+                  type: string
+                  format: date
+                hora:
+                  type: string
+                  example: '14:00'
+      responses:
+        '201':
+          description: Agendamento criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agendamento'
+        '400':
+          description: Campos obrigatórios ausentes, data passada ou horário não disponível
+        '404':
+          description: Atendente não encontrado
+        '409':
+          description: Já existe agendamento para este atendente ou cliente neste horário
+        '403':
+          description: Acesso permitido apenas para cliente
+    get:
+      summary: Listar agendamentos do cliente
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de agendamentos do cliente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Agendamento'
+        '403':
+          description: Acesso permitido apenas para cliente
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        tipo:
+          type: string
+    Atendente:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+    Cliente:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        telefone:
+          type: string
+    HorarioDisponivel:
+      type: object
+      properties:
+        id:
+          type: integer
+        atendenteId:
+          type: integer
+        data:
+          type: string
+        hora:
+          type: string
+    Agendamento:
+      type: object
+      properties:
+        id:
+          type: integer
+        clienteId:
+          type: integer
+        atendenteId:
+          type: integer
+        data:
+          type: string
+        hora:
+          type: string

@@ -1,0 +1,27 @@
+{
+  "name": "ppp-agenda-simples-api",
+  "version": "1.0.0",
+  "description": "Esta API permite o agendamento de horários entre clientes e prestadores de serviço.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidineiramossilva/ppp-agenda-simples-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidineiramossilva/ppp-agenda-simples-api/issues"
+  },
+  "homepage": "https://github.com/sidineiramossilva/ppp-agenda-simples-api#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
