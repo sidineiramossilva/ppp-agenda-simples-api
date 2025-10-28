@@ -20,7 +20,7 @@ Esta API permite o agendamento de horários entre clientes e prestadores de serv
 - Cliente só consulta seus próprios agendamentos
 
 ## Documentação
-A documentação Swagger está disponível no endpoint [http://localhost:3000/api-docs](http://localhost:3000/docs) e no arquivo `recursos/swagger.yaml`.
+A documentação Swagger está disponível no endpoint [http://localhost:3000/docs](http://localhost:3000/docs) e no arquivo `recursos/swagger.yaml`.
 
 ## Banco de Dados
 Utiliza armazenamento em memória (não persiste dados após reiniciar o servidor).
@@ -36,3 +36,4 @@ Utiliza armazenamento em memória (não persiste dados após reiniciar o servido
 1. Instale as dependências: `npm install express jsonwebtoken swagger-ui-express js-yaml`
 2. Inicie o servidor: `npm start`
 3. Acesse a documentação em `/docs`
+
