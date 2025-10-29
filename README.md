@@ -28,6 +28,7 @@ Utiliza armazenamento em memória (não persiste dados após reiniciar o servido
 ## Estrutura
 - routes
 - controllers
+- middleware
 - service
 - model
 - recursos
@@ -36,4 +37,5 @@ Utiliza armazenamento em memória (não persiste dados após reiniciar o servido
 1. Instale as dependências: `npm install express jsonwebtoken swagger-ui-express js-yaml`
 2. Inicie o servidor: `npm start`
 3. Acesse a documentação em `/docs`
+
 
