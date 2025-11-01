@@ -135,6 +135,7 @@ paths:
           description: Campos obrigatórios ausentes
         '403':
           description: Acesso permitido apenas para cliente
+  /clientes/{id}:  
     get:
       summary: Buscar dados do cliente
       security:
