@@ -1,0 +1,13 @@
+{   
+    "usuarioPrestador": {
+        "nome": "triton",
+        "senha": "123456",
+        "tipo": "prestador"
+    },
+
+    "usuarioCliente": {
+        "nome": "sidinei",
+        "senha": "654321",
+        "tipo": "cliente"
+    }
+}
