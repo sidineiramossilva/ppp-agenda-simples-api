@@ -60,11 +60,11 @@ describe('Atendente', () => {
         });  
 
         it('Deve retornar falha com 403 quando cadastrar atendente token inválido', async () => {
-            semToken = await obterToken('', '')
+            token = await obterToken('', '')
             const bodyAtendente = { ...postAtendente };
             const resposta = await request(process.env.BASE_URL)
                .post('/atendentes')
-               .set('Authorization', `Bearer ${semToken}`)
+               .set('Authorization', `Bearer ${token}`)
                .set('Content-Type', 'application/json')
                .send(bodyAtendente); 
             expect(resposta.status).to.equal(403);
@@ -77,7 +77,6 @@ describe('Atendente', () => {
             const bodyAtendente = { ...postAtendente };
             const resposta = await request(process.env.BASE_URL)
                .get('/atendentes')
-               .set('Authorization', `Bearer ${token}`)
                .set('Content-Type', 'application/json');
             expect(resposta.status).to.equal(200);
             expect(resposta.body[0].nome).to.contain(bodyAtendente.nome);
