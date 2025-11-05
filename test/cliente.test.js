@@ -62,11 +62,11 @@ describe('Cliente', () => {
         });  
 
         it('Deve retornar falha com 403 quando cadastrar cliente token inválido', async () => {
-            semToken = await obterToken('', '')
+            token = await obterToken('', '')
             const bodyCliente = { ...postCliente };
             const resposta = await request(process.env.BASE_URL)
                .post('/clientes')
-               .set('Authorization', `Bearer ${semToken}`)
+               .set('Authorization', `Bearer ${token}`)
                .set('Content-Type', 'application/json')
                .send(bodyCliente); 
             expect(resposta.status).to.equal(403);
@@ -121,11 +121,11 @@ describe('Cliente', () => {
         });  
 
         it('Deve retornar falha com 403 quando consultar cliente token inválido', async () => {
-            semToken = await obterToken('', '')
+            token = await obterToken('', '')
             const bodyCliente = { ...postCliente };
             const resposta = await request(process.env.BASE_URL)
                .get('/clientes/1')
-               .set('Authorization', `Bearer ${semToken}`)
+               .set('Authorization', `Bearer ${token}`)
                .set('Content-Type', 'application/json')
                .send(bodyCliente); 
             expect(resposta.status).to.equal(403);
