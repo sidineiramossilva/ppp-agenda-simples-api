@@ -80,7 +80,6 @@ describe('Atendente', () => {
                .set('Authorization', `Bearer ${token}`)
                .set('Content-Type', 'application/json');
             expect(resposta.status).to.equal(200);
-            console.log(resposta.body);
             expect(resposta.body[0].nome).to.contain(bodyAtendente.nome);
         });
     });
