@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha test/usuario.test.js test/login.test.js test/atendente.test.js test/horarios-disponiveis.test.js test/agendamento.test.js --timeout=200000 --reporter mochawesome"
+    "test": "mocha test/usuario.test.js test/login.test.js test/atendente.test.js test/cliente.test.js test/horarios-disponiveis.test.js test/agendamento.test.js --timeout=200000 --reporter mochawesome"
   },
   "repository": {
     "type": "git",
