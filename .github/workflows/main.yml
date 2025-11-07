@@ -24,7 +24,10 @@ jobs:
       # [deps do projeto] (node/npm, java/maven,gradle, python/pip, ...)
       - name: Instalando as dependências
         run: npm install
-
+        
+      - name: Instalando as dependências
+        run: npm install mocha chai supertest mochawesome dotenv --save
+        
       - name: Iniciar o servidor de mocks
         run: npm start &
 
