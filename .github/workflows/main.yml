@@ -1,0 +1,32 @@
+name: Test API Agenda Simples
+
+# gatilhos
+on:
+  workflow_dispatch:
+
+jobs:
+  tests:
+
+    # [config do so] (windows/linux/mac, chrome/firefox/edge, ...)
+    runs-on: ubuntu-latest
+
+    # [variaveis] (variáveis de ambiente, chaves de acesso a plataformas, etc.)
+    env:
+      API_BASE_URL: 'http://localhost:3000'
+
+    # [acoes ou passos]
+    steps:
+
+      # [projetos] (aplicacoes, projeto de teste, etc.)
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      # [deps do projeto] (node/npm, java/maven,gradle, python/pip, ...)
+      - name: Instalando as dependências
+        run: npm install
+
+      - name: Iniciar o servidor de mocks
+        run: npm start &
+
+      - name: Executar os testes
+        run: npm test
