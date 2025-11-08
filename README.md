@@ -58,7 +58,7 @@ Utiliza **armazenamento em memória** (não persiste dados após reiniciar o ser
    ```   
 ---
 
-## ▶️ Rodar os testes
+## ▶️ Rodar os testes de API
 Instale as dependências:
 
 ```
@@ -85,3 +85,19 @@ npm test
 - [Dotenv](https://github.com/motdotla/dotenv) - Gerenciamento de variáveis de ambiente
 
 ---
+
+### ▶️ Rodar os testes de Performance com K6
+
+```bash
+k6 run performance/login.test.js
+```
+### 📊 Acompanhamento em Tempo Real + Exportação de Relatório
+
+Você pode ativar o modo dashboard do K6 e exportar o relatório ao final do teste:
+
+```bash
+K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=html-report.html k6 run performance/login.test.js
+```
+
+Após a execução, o relatório estará salvo como `html-report.html`.
+
